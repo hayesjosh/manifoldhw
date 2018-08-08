@@ -1,0 +1,11 @@
+__pycache__
+.pytest_cache
+.ipynb_checkpoints/
+
+__ignore*
+
+/.idea
+/cortex
+/scripts/*.csv
+/scripts/my_directory
+.DS_Store
