@@ -1,10 +1,10 @@
-# **Cortex Data Science Homework Problem**
+# **Manifold ML Homework Problem**
 
 ## **Background**
 
-Cortex is a rapidly growing technology startup in the Commercial Real Estate space.  We provide software that enables building operators, including the team at the Empire State Building, to run their buildings with significantly more precision. This is creating substantial financial savings, while also having a significant sustainability impact. Cortex does this by providing an application layer on top of highly underutilized data "pipes" (Building Management Systems (BMS), meters, etc.), which makes sense of thousands of data points, makes that information available anywhere, and gives proactive recommendations for decisions that have to be made daily.
+One of our clients is a rapidly growing technology startup in the Commercial Real Estate space.  They provide software that enables building operators, including the team at the Empire State Building, to run their buildings with significantly more precision. This is creating substantial financial savings, while also having a significant sustainability impact. Our client does this by providing an application layer on top of highly underutilized data "pipes" (Building Management Systems (BMS), meters, etc.), which makes sense of thousands of data points, makes that information available anywhere, and gives proactive recommendations for decisions that have to be made daily.
 
-One of these recommendations is the start time to turn on the building HVAC systems on operating days. To save energy, most commercial building HVAC systems are turned off after business hours end. The building cools down (or heats up) during the course of the night and on weekends. Early each morning, before business hours begin again, the building HVAC systems must be turned on so that the building's internal temperature is comfortable for its tenants. Cortex's goal is to recommend this HVAC start time as accurately as possible. We don't want to recommend a start time that is too early — then the building will be "at temp" too early and we will have wasted energy. At the same time, we don't want to recommend a start time that is too late — then the building is still too cold (or too hot) when people are coming in to work.
+One of these recommendations is the start time to turn on the building HVAC systems on operating days. To save energy, most commercial building HVAC systems are turned off after business hours end. The building cools down (or heats up) during the course of the night and on weekends. Early each morning, before business hours begin again, the building HVAC systems must be turned on so that the building's internal temperature is comfortable for its tenants. Our clients goal is to recommend this HVAC start time as accurately as possible. We don't want to recommend a start time that is too early — then the building will be "at temp" too early and we will have wasted energy. At the same time, we don't want to recommend a start time that is too late — then the building is still too cold (or too hot) when people are coming in to work.
 
 This homework problem deals with a sub-problem of the larger start time recommendation problem. One of the key requirements of solving the start time recommendation problem is having a clean labelled historical data set. We want to know on any given historical day two things:
 
@@ -133,6 +133,6 @@ There are three tables in the database. A quick primer on the tables:
 
 ## Questions
 
-You should have been invited to private channel called `<your name>-interview-room` in the "Cortex Interview" Slack Workspace.  If you have any questions about this homework assignment, please feel free to message `@sprad` in this channel.
+You should have been invited to private channel called `<your name>-interview-room` in the "Manifold Interview" Slack Workspace.  If you have any questions about this homework assignment, please feel free to message `@sdey` in this channel.
 
 Good Luck!!!
