@@ -11,12 +11,12 @@ import pandas as pd
 import yaml
 import sys
 
-sys.path.append("..")
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from src.lease_satisfied_estimator import YourEstimator
+from src.lease_satisfied_estimator import YourEstimator, operatingDayCheck, getPred1, getPred2
+from src.data_loading import get_internal_temps
 
 load_dotenv(find_dotenv(), verbose=True)
-
 
 def _parse_config_and_setup_directory(config_file):
     """

@@ -12,13 +12,66 @@ import pandas as pd
 def get_internal_temps(db, building_id, start_time, end_time):
     """
     Get a portion of all the internal temperature time series for a building.
+    :param db: an active sql engine - ex. `db = create_engine(os.environ["HW_DATABASE_URL"])`
     :param building_id: integer
-    :param start_time: start time string
-    :param end_time: end time string
+    :param start_time: start time string - 'yyyy-dd-mm' treated differently than 'yyyy-dd-mm hh:mm:ss'
+    :param end_time: end time string - 'yyyy-dd-mm' treated differently than 'yyyy-dd-mm hh:mm:ss'
     :return: DataFrame with time as index and columns as internal temperature sensors.
     """
-    # TODO: Put your code here!
-    raise NotImplementedError()
+    #Need to create the SQL query. But that depends on a number of ways that the dates are input.
+    """
+    The gnarly bit of code that follows is largely because the query strings differ between test_*.py and run_historical_estimation.py,
+    and rather than alter your code (because I wasn't sure if you would test my functions with other code snippets) I wrote a series
+    of if statements to respond to the different submission types.
+    """
+    #Determining if range is one day, or a date range
+    if start_time != end_time:
+        #Identifying if start_time end_time are 'yyyy-dd-mm hh:mm:ss'
+        if len(start_time) > 10:
+            #Define a custom SQL query based on the inputs
+            sql_query = 'SELECT f1.measured_at as time, f1.measurement as temperature, b2.id as sensor_id FROM building_sensor_configs b2 JOIN floor_temperature_measurements f1 ON b2.id = f1.building_sensor_config_id WHERE b2.building_id = ' \
+            + str(building_id) + \
+            ' and b2.ignore = False and  f1.bad_data = False and f1.measured_at >= ' \
+            + "'" + start_time + "'" +\
+            ' AND f1.measured_at <= ' \
+            + "'" + end_time + "'"
+        #otherwise our start_time and end_time are 'yyy-dd-mm'
+        else:
+            start_ = start_time + " 00:00:00"
+            end_ = end_time + " 00:00:00"
+            #Define a custom SQL query based on the inputs
+            sql_query = 'SELECT f1.measured_at as time, f1.measurement as temperature, b2.id as sensor_id FROM building_sensor_configs b2 JOIN floor_temperature_measurements f1 ON b2.id = f1.building_sensor_config_id WHERE b2.building_id = ' \
+            + str(building_id) + \
+            ' and b2.ignore = False and  f1.bad_data = False and f1.measured_at >= ' \
+            + "'" + start_ + "'" +\
+            ' AND f1.measured_at <= ' \
+            + "'" + end_ + "'"
+    #In this case, the input dates are the same
+    else:
+        if len(start_time) > 10:
+            #Define a custom SQL query based on the inputs
+            sql_query = 'SELECT f1.measured_at as time, f1.measurement as temperature, b2.id as sensor_id FROM building_sensor_configs b2 JOIN floor_temperature_measurements f1 ON b2.id = f1.building_sensor_config_id WHERE b2.building_id = ' \
+            + str(building_id) + \
+            ' and b2.ignore = False and  f1.bad_data = False and f1.measured_at between ' \
+            + "'" + start_time + "'" +\
+            ' AND ' \
+            + "date '" + start_time + "' + interval '23 hour';"
+        else:
+            start_ = start_time + " 00:00:00"
+            end_ = start_time + " 23:59:59"
+            #Define a custom SQL query based on the inputs
+            sql_query = 'SELECT f1.measured_at as time, f1.measurement as temperature, b2.id as sensor_id FROM building_sensor_configs b2 JOIN floor_temperature_measurements f1 ON b2.id = f1.building_sensor_config_id WHERE b2.building_id = ' \
+            + str(building_id) + \
+            ' and b2.ignore = False and  f1.bad_data = False and f1.measured_at >= ' \
+            + "'" + start_ + "'" +\
+            ' AND f1.measured_at <= ' \
+            + "'" + end_ + "'"
+
+    #Run that query and put results into a dataframe
+    df = pd.read_sql(sql_query, db)
+    df['time'] = pd.to_datetime(df['time'])
+    df_a = df.pivot(index='time', columns='sensor_id', values='temperature')
+    return df_a
 
 
 def get_lease_obligations(building_id):

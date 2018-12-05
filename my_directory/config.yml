@@ -1,0 +1,4 @@
+buildings: [1, 8, 20, 37]
+end_date: '2018-07-01'
+error_analysis_dir: my_directory
+start_date: '2018-01-01'
